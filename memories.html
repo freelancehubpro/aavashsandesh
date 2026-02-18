@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💗</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(120deg,#ff9a9e,#fad0c4);
+    color:#444;
+    overflow-x:hidden;
+    transition:background 1s ease;
+}
+
+/* NIGHT MODE */
+body.night{
+    background:linear-gradient(120deg,#1a1b2e,#2b2d42);
+    color:#f1f1f1;
+}
+
+/* PASSWORD SCREEN */
+#lockScreen{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:linear-gradient(120deg,#ff9a9e,#fad0c4);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:10;
+    text-align:center;
+}
+#lockScreen h2{
+    font-family:'Playfair Display',serif;
+    font-size:28px;
+}
+#lockScreen input{
+    padding:12px 20px;
+    border:none;
+    border-radius:30px;
+    margin-top:15px;
+    text-align:center;
+}
+#lockScreen button{
+    margin-top:15px;
+    padding:10px 25px;
+    border:none;
+    border-radius:30px;
+    background:#ff6f91;
+    color:white;
+    cursor:pointer;
+}
+
+/* PARTICLES */
+#particles{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+}
+
+/* HEADER */
+header{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+}
+#typing{
+    font-family:'Great Vibes',cursive;
+    font-size:42px;
+    max-width:800px;
+    line-height:1.3;
+}
+
+/* SECTIONS */
+section{
+    max-width:800px;
+    margin:auto;
+    padding:100px 20px;
+    opacity:0;
+    transform:translateY(50px);
+    transition:all 1.4s ease;
+    text-align:center;
+}
+section.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.bigText{
+    font-family:'Playfair Display',serif;
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+.softText{
+    font-weight:300;
+    font-size:18px;
+    line-height:1.8;
+}
+
+/* GLOW TEXT */
+.glow{
+    font-family:'Great Vibes',cursive;
+    font-size:36px;
+    color:#ff6f91;
+    animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+    from{text-shadow:0 0 5px #ff6f91;}
+    to{text-shadow:0 0 20px #ff6f91;}
+}
+
+/* BUTTON */
+button.main{
+    margin-top:40px;
+    background:#ff6f91;
+    color:white;
+    border:none;
+    padding:15px 30px;
+    border-radius:30px;
+    cursor:pointer;
+}
+
+.hidden{display:none;}
+
+footer{
+    text-align:center;
+    padding:40px;
+    font-family:'Great Vibes',cursive;
+    font-size:26px;
+}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="lockScreen">
+    <h2>This little world is protected 💗</h2>
+    <input type="password" id="passwordInput" placeholder="Enter password">
+    <button onclick="checkPassword()">Enter</button>
+</div>
+
+<canvas id="particles"></canvas>
+
+<audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<header>
+    <h1 id="typing"></h1>
+</header>
+
+<section>
+    <div class="bigText">You are stronger than your low days.</div>
+    <div class="softText">
+        Some days feel heavy. Some thoughts feel louder than they should.
+        But even in silence, you are deeply valued.
+    </div>
+</section>
+
+<section>
+    <div class="bigText glow">You matter. Always.</div>
+    <div class="softText">
+        Not because of achievements.  
+        Not because of success.  
+        Not because of what you give.  
+        But because of who you are.
+    </div>
+</section>
+
+<section>
+    <div class="bigText">This is just a chapter.</div>
+    <div class="softText">
+        Not the whole story.  
+        Not the ending.  
+        Just a page that will pass.
+    </div>
+
+    <button class="main" onclick="showMessage()">Click only on a bad day 💖</button>
+    <p id="hiddenMessage" class="hidden softText" style="margin-top:20px;">
+        I'm always on your side. No matter what. No matter when.
+    </p>
+</section>
+
+<footer>Made with love 💕</footer>
+
+<script>
+
+/* PASSWORD */
+function checkPassword(){
+    if(document.getElementById("passwordInput").value==="sandeshlovesaavash"){
+        document.getElementById("lockScreen").style.display="none";
+    }
+}
+
+/* TYPING */
+const text="Hey... this little pink universe exists because you matter more than you think.";
+let i=0;
+function typing(){
+    if(i<text.length){
+        document.getElementById("typing").innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(typing,40);
+    }
+}
+typing();
+
+/* FADE IN */
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+    sections.forEach(sec=>{
+        if(sec.getBoundingClientRect().top<window.innerHeight/1.2){
+            sec.classList.add("show");
+        }
+    });
+});
+
+/* NIGHT MODE AUTO */
+const hour=new Date().getHours();
+if(hour>=19||hour<=5){
+    document.body.classList.add("night");
+}
+
+/* HIDDEN MESSAGE */
+function showMessage(){
+    document.getElementById("hiddenMessage").style.display="block";
+}
+
+/* HEART PARTICLES */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let hearts=[];
+class Heart{
+    constructor(){
+        this.x=Math.random()*canvas.width;
+        this.y=Math.random()*canvas.height;
+        this.size=Math.random()*6+4;
+        this.speed=Math.random()*0.5+0.2;
+    }
+    update(){
+        this.y-=this.speed;
+        if(this.y<0){this.y=canvas.height;}
+    }
+    draw(){
+        ctx.fillStyle="rgba(255,255,255,0.7)";
+        ctx.beginPath();
+        ctx.moveTo(this.x,this.y);
+        ctx.bezierCurveTo(this.x,this.y-3,this.x-5,this.y-3,this.x-5,this.y);
+        ctx.bezierCurveTo(this.x-5,this.y+3,this.x,this.y+5,this.x,this.y+8);
+        ctx.bezierCurveTo(this.x,this.y+5,this.x+5,this.y+3,this.x+5,this.y);
+        ctx.bezierCurveTo(this.x+5,this.y-3,this.x,this.y-3,this.x,this.y);
+        ctx.fill();
+    }
+}
+for(let i=0;i<40;i++){hearts.push(new Heart());}
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    hearts.forEach(h=>{h.update();h.draw();});
+    requestAnimationFrame(animate);
+}
+animate();
+
+</script>
+</body>
+</html>
